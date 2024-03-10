@@ -1,8 +1,8 @@
-import Calification from "../model/calification.model";
+const Calification = require( "../model/calification.model");
 
-export const createCalification = async (req, res, next) => {
+const createCalification = async (req, res, next) => {
     try {
-      const Calification = new Task(req.body);
+      const Calification = new Calification(req.body);
       await Calification.save();
       res.redirect("/");
     } catch (error) {
