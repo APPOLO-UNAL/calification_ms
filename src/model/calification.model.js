@@ -2,22 +2,32 @@ const { Pool } = require('pg');
 
 const pool = new Pool(
   {
-    user: "postgres",
-    host:"localhost",
-    password:"Juandi1810",
-    database: "calification_db",
-    port: 5432
+    user:process.env.PG_USER,
+    host:process.env.PG_HOST,
+    password: process.env.PG_PASSWORD,
+    database: process.env.PG_DB_NAME,
+    port: process.env.PG_PORT
 });
 
+function fecha(){
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = d.getMonth();
+  const day = d.getDate();
+  const today = '"'+year.toString()+'-'+month.toString()+'-'+day.toString()+'"';
+  return today
+}
+
 const createCalification = async (req, res) => {
-      const { ID_calification, user_ID, rate, item_ID, date } = req.body;
-      const response = await pool.query('INSERT INTO public.calification("ID_calification", "user_ID", rate, "item_ID", date) VALUES ($1, $2, $3, $4, $5)', [ID_calification, user_ID, rate, item_ID, date]);
-      res.json({
-        message: 'Calification Added successfully',
-        body: {
-          calification: {ID_calification, user_ID, rate, item_ID, date}
+    console.log(fecha)
+    const { user_ID, rate, item_ID} = req.body;
+    const response = await pool.query('INSERT INTO public.calification("user_ID", rate, "item_ID", date) VALUES ($1, $2, $3, $4)', [user_ID, rate, item_ID, fecha()]);
+    res.json({
+      message: 'Calification Added successfully',
+      body: {
+        calification: {user_ID, rate, item_ID}
       }
-      })
+    })
 };
 
 const allCalification = async (req, res) => {
@@ -39,8 +49,8 @@ const getCalificationById = async (req, res) => {
 
 const editCalification = async (req, res) => {
   const id = parseInt(req.params.id);
-  const { ID_calification, user_ID, rate, item_ID, date } = req.body;
-  const response = await pool.query('UPDATE public.calification SET "ID_calification" = $1, "user_ID" = $2, rate = $3, "item_ID" = $4, date = $5 WHERE "ID_calification" = $6', [ID_calification, user_ID, rate, item_ID, date, id]);
+  const { ID_calification, user_ID, rate, item_ID} = req.body;
+  const response = await pool.query('UPDATE public.calification SET "ID_calification" = $1, "user_ID" = $2, rate = $3, "item_ID" = $4, date = $5 WHERE "ID_calification" = $6', [ID_calification, user_ID, rate, item_ID, fecha(), id]);
   res.json('Calification Updated Successfully');
 }
 
