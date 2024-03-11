@@ -9,4 +9,4 @@ app.use(express.urlencoded({extended: false}));
 app.use(require('./routes/calification.routes'));
 
 app.listen(3000);
-console.log('Server on port', 8000);
+console.log('Server on port', 3000);
