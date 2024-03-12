@@ -38,7 +38,7 @@ const allCalification = async (req, res) => {
 const deleteCalification = async (req, res) => {
   const ID_calification = parseInt(req.params.id);
   await pool.query('DELETE FROM public.calification WHERE "ID_calification" = $1', [ID_calification]);
-  res.json(`User ${ID_calification} deleted Successfully`);
+  res.json(`Calification ${ID_calification} deleted Successfully`);
 };
 
 const getCalificationById = async (req, res) => {
