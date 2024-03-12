@@ -49,8 +49,8 @@ const getCalificationById = async (req, res) => {
 
 const editCalification = async (req, res) => {
   const id = parseInt(req.params.id);
-  const { ID_calification, user_ID, rate, item_ID} = req.body;
-  const response = await pool.query('UPDATE public.calification SET "ID_calification" = $1, "user_ID" = $2, rate = $3, "item_ID" = $4, date = $5 WHERE "ID_calification" = $6', [ID_calification, user_ID, rate, item_ID, fecha(), id]);
+  const { user_ID, rate, item_ID} = req.body;
+  const response = await pool.query('UPDATE public.calification SET  "user_ID" = $1, rate = $2, "item_ID" = $3, date = $4 WHERE "ID_calification" = $5', [user_ID, rate, item_ID, fecha(), id]);
   res.json('Calification Updated Successfully');
 }
 
