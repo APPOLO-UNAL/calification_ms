@@ -4,7 +4,8 @@ const {
     allCalification,
     deleteCalification,
     getCalificationById,
-    editCalification
+    editCalification,
+    getRatingAverageById
 } = require( "../model/calification.model");
 
 const router = Router();
@@ -14,5 +15,6 @@ router.get("/api/v1/calification/all", allCalification);
 router.get("/api/v1/calification/:id", getCalificationById)
 router.delete("/api/v1/calification/:id", deleteCalification);
 router.put("/api/v1/calification/:id", editCalification);
+router.get("/api/v1/calification/average/:id", getRatingAverageById)
 
 module.exports = router;

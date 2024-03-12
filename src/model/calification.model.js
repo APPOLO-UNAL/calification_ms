@@ -54,10 +54,19 @@ const editCalification = async (req, res) => {
   res.json('Calification Updated Successfully');
 }
 
+const getRatingAverageById = async (req,res) => {
+  const id = parseInt(req.params.id);
+  const response = await pool.query('SELECT rate FROM public.calification WHERE "item_ID" = $1', [id]);
+  const suma = response.rows.reduce((acumulador, elemento) => acumulador + elemento.rate, 0);
+  const promedio = suma /response.rowCount;
+  res.json(promedio);
+}
+
 
 module.exports = {createCalification, 
   allCalification,
   deleteCalification,
   getCalificationById,
-  editCalification
+  editCalification,
+  getRatingAverageById
 };
