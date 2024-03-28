@@ -1,13 +1,4 @@
-const { Pool } = require('pg');
-
-const pool = new Pool(
-  {
-    user:process.env.PG_USER,
-    host:process.env.PG_HOST,
-    password: process.env.PG_PASSWORD,
-    database: process.env.PG_DB_NAME,
-    port: process.env.PG_PORT
-});
+const pool = require("./index");
 
 function fecha(){
   const d = new Date();
@@ -42,8 +33,10 @@ const deleteCalification = async (req, res) => {
 };
 
 const getCalificationById = async (req, res) => {
-  const ID_calification = parseInt(req.params.id);
-  const response = await pool.query('SELECT * FROM public.calification WHERE "ID_calification" = $1', [ID_calification]);
+  const ID_PERSONA = parseInt(req.params.idPersona);
+  const ID_ITEM = parseInt(req.params.idPersona.idItem);
+  console.log(ID_PERSONA,ID_ITEM);
+  const response = await pool.query('SELECT * FROM public.calification WHERE "user_ID" = $1 AND "item_ID"=$2', [ID_PERSONA,ID_ITEM]);
   res.json(response.rows);
 };
 
