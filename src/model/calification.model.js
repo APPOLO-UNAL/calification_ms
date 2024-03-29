@@ -34,7 +34,7 @@ const deleteCalification = async (req, res) => {
 
 const getCalificationById = async (req, res) => {
   const ID_PERSONA = parseInt(req.params.idPersona);
-  const ID_ITEM = parseInt(req.params.idPersona.idItem);
+  const ID_ITEM = parseInt(req.params.idItem);
   console.log(ID_PERSONA,ID_ITEM);
   const response = await pool.query('SELECT * FROM public.calification WHERE "user_ID" = $1 AND "item_ID"=$2', [ID_PERSONA,ID_ITEM]);
   res.json(response.rows);
