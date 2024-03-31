@@ -3,11 +3,13 @@ const pool = require("./index");
 function fecha(){
   const d = new Date();
   const year = d.getFullYear();
-  const month = d.getMonth();
+  const month = (d.getMonth())+1;
   const day = d.getDate();
   const today = '"'+year.toString()+'-'+month.toString()+'-'+day.toString()+'"';
   return today
 }
+
+
 
 const createCalification = async (req, res) => {
     console.log(fecha)
