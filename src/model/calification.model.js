@@ -16,10 +16,7 @@ const createCalification = async (req, res) => {
     const { user_ID, rate, item_ID} = req.body;
     const response = await pool.query('INSERT INTO public.calification("user_ID", rate, "item_ID", date) VALUES ($1, $2, $3, $4)', [user_ID, rate, item_ID, fecha()]);
     res.json({
-      message: 'Calification Added successfully',
-      body: {
-        calification: {user_ID, rate, item_ID}
-      }
+        user_ID, rate, item_ID
     })
 };
 
@@ -43,17 +40,18 @@ const getCalificationById = async (req, res) => {
 };
 
 const editCalification = async (req, res) => {
-  const id = parseInt(req.params.id);
-  const { user_ID, rate, item_ID} = req.body;
-  const response = await pool.query('UPDATE public.calification SET  "user_ID" = $1, rate = $2, "item_ID" = $3, date = $4 WHERE "ID_calification" = $5', [user_ID, rate, item_ID, fecha(), id]);
-  res.json('Calification Updated Successfully');
+  const ID_PERSONA = parseInt(req.params.idPersona);
+  const ID_ITEM = parseInt(req.params.idItem);
+  const {rate} = req.body;
+  const response = await pool.query('UPDATE public.calification SET rate = $2, date = $4 WHERE "user_ID" = $1 AND "item_ID"=$3', [ID_PERSONA, rate, ID_ITEM, fecha()]);
+  res.json(rate);
 }
 
 const getRatingAverageById = async (req,res) => {
   const id = parseInt(req.params.id);
   const response = await pool.query('SELECT rate FROM public.calification WHERE "item_ID" = $1', [id]);
   const suma = response.rows.reduce((acumulador, elemento) => acumulador + elemento.rate, 0);
-  const promedio = suma /response.rowCount;
+  const promedio = (suma /response.rowCount).toString();
   res.json(promedio);
 }
 
