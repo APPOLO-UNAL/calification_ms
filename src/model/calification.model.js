@@ -26,9 +26,10 @@ const allCalification = async (req, res) => {
 };
 
 const deleteCalification = async (req, res) => {
-  const ID_calification = parseInt(req.params.id);
-  await pool.query('DELETE FROM public.calification WHERE "ID_calification" = $1', [ID_calification]);
-  res.json(`Calification ${ID_calification} deleted Successfully`);
+  const ID_PERSONA = parseInt(req.params.idPersona);
+  const ID_ITEM = parseInt(req.params.idItem);
+  await pool.query('DELETE FROM public.calification WHERE "user_ID" = $1 AND "item_ID"=$2', [ID_PERSONA,ID_ITEM]);
+  res.json(`Calification deleted Successfully`);
 };
 
 const getCalificationById = async (req, res) => {
